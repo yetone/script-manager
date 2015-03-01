@@ -8,20 +8,20 @@ test0_manager = Manager()
 
 
 @test_manager.command
-def test(a, b, c=False, name='yetone'):
-    print('test.test: <a: {}, b: {}, c: {}> by {}'.format(a, b, c, name))
+def hello(a, b, c=False, name='yetone'):
+    print('test.hello: <a: {}, b: {}, c: {}> by {}'.format(a, b, c, name))
 
 
 @test_manager.command
-def test0(a, b, c=False, name='yetone'):
-    print('test.test0: <a: {}, b: {}, c: {}> by {}'.format(a, b, c, name))
+def hi(a, b, c=False, name='yetone'):
+    print('test.hi: <a: {}, b: {}, c: {}> by {}'.format(a, b, c, name))
 
 
 @test0_manager.command
-def test(a, b, c=False, name='yetone'):
-    print('test0.test: <a: {}, b: {}, c: {}> by {}'.format(a, b, c, name))
+def say(a, b, c=False, name='yetone'):
+    print('test0.say: <a: {}, b: {}, c: {}> by {}'.format(a, b, c, name))
 
 
 @test0_manager.command
-def test0(a, b, c=False, name='yetone'):
-    print('test0.test0: <a: {}, b: {}, c: {}> by {}'.format(a, b, c, name))
+def sing(a, b, c=False, name='yetone'):
+    print('test0.sing: <a: {}, b: {}, c: {}> by {}'.format(a, b, c, name))

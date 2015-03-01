@@ -1,15 +1,18 @@
 __author__ = 'yetone'
 
 import sys
+import argparse
 from .commands import Command
 
 
 class Manager(object):
     def __init__(self):
         self._command_map = {}
+        self.arg_parser = argparse.ArgumentParser()
 
     def add_command(self, command_name, command):
         self._command_map[command_name] = command
+        self.arg_parser.add_argument(command_name)
 
     def command(self, func):
         command = Command(func)
@@ -20,6 +23,9 @@ class Manager(object):
         if not args:
             args = sys.argv[1:]
         args = list(args)
-        command_name = args.pop(0)
-        command = self._command_map[command_name]
-        command.run(*args, **kwargs)
+        try:
+            command_name = args.pop(0)
+            command = self._command_map[command_name]
+            command.run(*args, **kwargs)
+        except (IndexError, KeyError):
+            self.arg_parser.print_help()
