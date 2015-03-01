@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '0.0.6'
+version = '0.0.7'
 
 setup(
     name='script-manager',
@@ -12,4 +12,8 @@ setup(
     author='yetone',
     author_email='i@yetone.net',
     packages=find_packages(),
+    platforms='any',
+    tests_require=(
+        'pytest',
+    )
 )
