@@ -6,9 +6,9 @@ from .commands import Command
 
 
 class Manager(object):
-    def __init__(self):
+    def __init__(self, description=None):
         self._command_map = {}
-        self.arg_parser = argparse.ArgumentParser()
+        self.arg_parser = argparse.ArgumentParser(description=description)
 
     def add_command(self, command_name, command):
         self._command_map[command_name] = command
