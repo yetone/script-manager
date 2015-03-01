@@ -2,8 +2,7 @@ __author__ = 'yetone'
 
 import inspect
 import argparse
-from itertools import izip
-from ._compat import text_type
+from ._compat import text_type, izip
 
 
 class Command(object):
