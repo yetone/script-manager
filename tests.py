@@ -5,6 +5,7 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.abspath(__file__))))
 
 from script_manager import Manager
+from script_manager._compat import PY2
 
 
 def run(command_line, manager_run):
@@ -77,7 +78,10 @@ def test_nested_command(capsys):
 
     run('manage.py test hi', main_manager.run)
     out, err = capsys.readouterr()
-    assert 'too few arguments' in err
+    if PY2:
+        assert 'too few arguments' in err
+    else:
+        assert 'the following arguments are required' in err
 
     run('manage.py test hi -h', main_manager.run)
     out, err = capsys.readouterr()
