@@ -118,3 +118,20 @@ def test_nested_command(capsys):
     run('manage.py test0 sing -n foo 1 2', main_manager.run)
     out, err = capsys.readouterr()
     assert 'test0.sing: <a: 1, b: 2, c: False, name: foo>' in out
+
+
+def test_description(capsys):
+    description = 'Test my description'
+    manager = Manager(description=description)
+
+    @manager.command
+    def hello():
+        print('hello')
+
+    run('manage.py', manager.run)
+    out, err = capsys.readouterr()
+    assert description in out
+
+    run('manage.py -h', manager.run)
+    out, err = capsys.readouterr()
+    assert description in out
