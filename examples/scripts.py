@@ -2,9 +2,9 @@ __author__ = 'yetone'
 
 from script_manager import Manager
 
-test_manager = Manager()
+test_manager = Manager(description='The test manager')
 
-test0_manager = Manager()
+test0_manager = Manager(description='The test0 manager')
 
 
 @test_manager.command
