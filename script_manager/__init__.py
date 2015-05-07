@@ -26,6 +26,7 @@ class Manager(object):
         try:
             command_name = args.pop(0)
             command = self._command_map[command_name]
-            command.run(*args, **kwargs)
         except (IndexError, KeyError):
             self.arg_parser.print_help()
+            return
+        command.run(*args, **kwargs)
