@@ -23,6 +23,7 @@ def run(command_line, manager_run):
 
 
 class Test(unittest.TestCase):
+
     @pytest.fixture(autouse=True)
     def inject_fixtures(self, capsys):
         self.capsys = capsys
