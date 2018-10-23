@@ -40,7 +40,7 @@ def test(name, age):
     :param name: This is my name
     :param age: This is my age
     """
-    print('My name is {}, and I have {} years old.'.format(name, age))
+    print('My name is {}, and I am {} years old.'.format(name, age))
 
 
 if __name__ == '__main__':
@@ -107,6 +107,6 @@ and:
 
 ```shell
 ➜ python test.py test yetone 12
-My name is yetone, and I have 12 years old.
+My name is yetone, and I am 12 years old.
 
 ```
