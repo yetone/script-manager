@@ -163,3 +163,16 @@ class Test(unittest.TestCase):
         self.assertIn("I'm a", out)
         self.assertIn("I'm b", out)
         self.assertIn("I'm c", out)
+
+    def test_conflict_flag(self):
+        manager = Manager()
+
+        @manager.command
+        def hello(host='127.0.0.1', boy=1, bird=2):
+            print('hello')
+
+        run('manage.py hello -h', manager.run)
+        out, err = self.capsys.readouterr()
+        self.assertIn('-H HOST, --host HOST', out)
+        self.assertIn('-b BOY, --boy BOY', out)
+        self.assertIn('--bird BIRD', out)
