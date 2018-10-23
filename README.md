@@ -9,6 +9,13 @@ script-manager
 A command-line interface. Just a simple and crude implementation of Flask-Script.
 
 
+# Install
+
+```shell
+pip install script-manager
+```
+
+
 # Examples
 
 If you create a `test.py` file like this:
