@@ -1,12 +1,12 @@
 from setuptools import find_packages, setup
 
-version = '0.2.1'
+version = '0.2.2'
 
 setup(
     name='script-manager',
     version=version,
     keywords=('command-line interface', 'flask_script', 'argparse', 'script'),
-    description='A command-line interface. Just a simple and crude implementation of Flask-Script.',
+    description='An elegant command-line interface. Usage like Flask-Script but more powerful and universal.',
     url='https://github.com/yetone/script-manager',
     license='MIT License',
     author='yetone',

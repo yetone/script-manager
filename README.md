@@ -8,7 +8,7 @@ script-manager
 [![PyPI Wheel](https://img.shields.io/pypi/wheel/script-manager.svg)](https://pypi.org/project/script-manager)
 
 
-A command-line interface. Just a simple and crude implementation of Flask-Script.
+An elegant command-line interface. Usage like Flask-Script but more powerful and universal.
 
 
 # Install
