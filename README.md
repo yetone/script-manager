@@ -3,6 +3,7 @@ script-manager
 
 
 [![Build Status](https://scrutinizer-ci.com/g/yetone/script-manager/badges/build.png?b=master)](https://scrutinizer-ci.com/g/yetone/script-manager/build-status/master)
+[![Code Coverage](https://scrutinizer-ci.com/g/yetone/script-manager/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/yetone/script-manager/?branch=master)
 
 
 A command-line interface. Just a simple and crude implementation of Flask-Script.
