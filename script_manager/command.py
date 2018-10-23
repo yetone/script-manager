@@ -12,7 +12,9 @@ class Command(object):
             docstring = parse_docstring(func.__doc__)
         self.docstring = docstring
 
-        self.arg_parser = argparse.ArgumentParser(description=self.docstring and self.docstring.description)
+        self.arg_parser = argparse.ArgumentParser(
+            description=self.docstring and self.docstring.description
+        )
 
         argspec = getargspec(func)
         args = argspec.args
@@ -24,6 +26,9 @@ class Command(object):
         defaults = defaults or {}
 
         for arg in args + list(defaults.keys()):
+            if arg == 'help':
+                raise Exception("Your arg can't named as 'help'!")
+
             arg_kwargs = {}
 
             if self.docstring and arg in self.docstring.params:
@@ -49,15 +54,30 @@ class Command(object):
             else:
                 arg_kwargs['type'] = type(default)
 
-            self.add_argument('-%s' % arg[0],
-                              '--%s' % arg,
-                              **arg_kwargs)
+            prefix_letter = arg[0]
+            if prefix_letter == 'h':
+                prefix_letter = 'H'
+
+            brief_flag = '-%s' % prefix_letter
+            flag = '--%s' % arg
+
+            string_actions = self.get_string_actions()
+
+            if brief_flag in string_actions:
+                brief_flag = None
+
+            arg_args = filter(None, (brief_flag, flag))
+
+            self.add_argument(*arg_args, **arg_kwargs)
 
         self.func = func
         self.__doc__ = func.__doc__
 
     def add_argument(self, *args, **kwargs):
         self.arg_parser.add_argument(*args, **kwargs)
+
+    def get_string_actions(self):
+        return self.arg_parser._option_string_actions
 
     def run(self, *args):
         _args = self.arg_parser.parse_args(args)
