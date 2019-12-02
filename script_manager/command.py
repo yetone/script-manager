@@ -2,8 +2,35 @@ __author__ = 'yetone'
 
 import inspect
 import argparse
-from script_manager._compat import text_type, getargspec
+from script_manager.compat import text_type, getargspec
+from script_manager.compat.typing import Optional, Union, Tuple, List, _GenericAlias
 from script_manager.utils import parse_docstring
+
+
+ACTION = str
+ACTION_STORE = 'store'  # type: ACTION
+ACTION_APPEND = 'append'  # type: ACTION
+
+
+def guess_type(t):
+    # type: (Optional[Union[_GenericAlias, type]]) -> Tuple[type, ACTION, bool]
+    if isinstance(t, type):
+        if t in (list, tuple):
+            return text_type, ACTION_APPEND, True
+        return t, ACTION_STORE, True
+    if not isinstance(t, _GenericAlias):
+        return text_type, ACTION_STORE, False
+    if t == Optional[List[int]]:
+        return int, ACTION_APPEND, False
+    if t == Optional[List[str]]:
+        return text_type, ACTION_APPEND, False
+    if t == List[int]:
+        return int, ACTION_APPEND, True
+    if t == List[str]:
+        return text_type, ACTION_APPEND, True
+    if t.__origin__ is list:
+        return text_type, ACTION_APPEND, True
+    return text_type, ACTION_STORE, False
 
 
 class Command(object):
@@ -36,23 +63,25 @@ class Command(object):
                 if param.description:
                     arg_kwargs['help'] = param.description
 
+            arg_type, arg_action, arg_required = guess_type(argspec.annotations.get(arg))
+
             if arg not in defaults:
-                self.add_argument(arg, type=text_type, **arg_kwargs)
+                self.add_argument(arg, type=arg_type, **arg_kwargs)
                 continue
 
             default = defaults[arg]
 
             arg_kwargs.update(dict(
-                action='store',
+                action=arg_action,
                 dest=arg,
-                required=False,
+                required=arg_required,
                 default=default
             ))
 
             if isinstance(default, bool):
                 arg_kwargs['action'] = 'store_true'
             else:
-                arg_kwargs['type'] = type(default)
+                arg_kwargs['type'] = arg_type
 
             prefix_letter = arg[0]
             if prefix_letter == 'h':

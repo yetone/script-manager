@@ -23,14 +23,17 @@ pip install script-manager
 If you create a `test.py` file like this:
 
 ```python
+from typing import Optional, List
 from script_manager import Manager
 
 manager = Manager('I am a command')
 
 
 @manager.command
-def run(host='127.0.0.1', port=8080, hehe=1):
+def run(host: str = '127.0.0.1', port: int = 8080, hehe: Optional[List[int]] = None):
     print('Running at http://{}:{}'.format(host, port))
+    if hehe is not None:
+        print(sum(hehe))
 
 
 @manager.command
@@ -100,6 +103,13 @@ and:
 ```shell
 ➜ python test.py run -H 0.0.0.0 -p 8888
 Running at http://0.0.0.0:8888
+
+```
+
+```shell
+➜ python test.py run -H 0.0.0.0 -p 8888 --hehe 1 --hehe 2 --hehe 3
+Running at http://0.0.0.0:8888
+6
 
 ```
 
