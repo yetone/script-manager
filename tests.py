@@ -2,12 +2,12 @@ __author__ = 'yetone'
 
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.abspath(__file__))))  # noqa
 
 import pytest
 import unittest
 from script_manager import Manager
-from script_manager._compat import PY2
+from script_manager.compat import PY2
 
 
 def run(command_line, manager_run):
@@ -32,14 +32,18 @@ class Test(unittest.TestCase):
         manager = Manager()
 
         @manager.command
-        def hello():
-            print('hello')
+        def hello_world():
+            print('hello world')
 
-        self.assertIn('hello', manager._command_map)
+        self.assertIn('hello-world', manager._command_map)
 
-        run('manage.py hello', manager.run)
+        run('manage.py hello_world', manager.run)
         out, err = self.capsys.readouterr()
-        self.assertIn('hello', out)
+        self.assertIn('hello world', out)
+
+        run('manage.py hello-world', manager.run)
+        out, err = self.capsys.readouterr()
+        self.assertIn('hello world', out)
 
     def test_nested_command(self):
 
@@ -176,3 +180,7 @@ class Test(unittest.TestCase):
         self.assertIn('-H HOST, --host HOST', out)
         self.assertIn('-b BOY, --boy BOY', out)
         self.assertIn('--bird BIRD', out)
+
+
+if not PY2:
+    from py3_tests import *  # noqa

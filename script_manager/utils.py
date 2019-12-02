@@ -48,7 +48,7 @@ def parse_docstring(txt):
             raises.append(line)
         else:
             if params:
-                params[-1].desciption += '\n' + line
+                params[-1].description += '\n' + line
             else:
                 descriptions.append(line)
     return DocString('\n'.join(descriptions), params)
